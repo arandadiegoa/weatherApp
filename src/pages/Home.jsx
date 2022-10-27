@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import { HomeContainer } from "../components/Common/Home.styled";
 import Weather from "../components/Weather/Weather";
 import { fetchIpUser } from "../services/ipUser.svc";
 
 const Home = () => {
   const [ipUser, setIpUser] = useState([]);
-
+  
   const getInfoIp = async () => {
     try {
       const { error, data } = await fetchIpUser();
@@ -21,17 +22,9 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
-      <h1>INFO IP User</h1>
-      <li>{ipUser.country}</li>
-      <li>{ipUser.regionName}</li>
-      <li>{ipUser.lat}</li>
-      <li>{ipUser.lon}</li>
-
-      <div>
-        <Weather latProp={ipUser.lat} lonProp={ipUser.lon} />
-      </div>
-    </div>
+    <HomeContainer>
+    <Weather regionName={ipUser.regionName} />
+    </HomeContainer>
   );
 };
 export default Home;

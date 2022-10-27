@@ -2,14 +2,12 @@ import { useEffect, useState } from "react";
 import { fetchWeatherInfo } from "../../services/weatherInfo.svc";
 import Card from "../Card/Card";
 
-const Weather = ({ latProp, lonProp }) => {
+const Weather = ({ regionName }) => {
   const [infoWeather, setInfoWeather] = useState({});
-
-  console.log(latProp, lonProp);
-
-  const getInfoWeather = async (lat, lon) => {
+  
+  const getInfoWeather = async (regionName) => {
     try {
-      const { error, data } = await fetchWeatherInfo(lat, lon);
+      const { error, data } = await fetchWeatherInfo(regionName);
       if (!error) {
         setInfoWeather(data);
       }
@@ -19,8 +17,8 @@ const Weather = ({ latProp, lonProp }) => {
   };
 
   useEffect(() => {
-    if (latProp && lonProp) getInfoWeather(latProp, lonProp);
-  }, [latProp, lonProp]);
+    if (regionName) getInfoWeather(regionName);
+  }, [regionName]);
 
   if (Object.keys(infoWeather).length) {
     return <Card infoWeather={infoWeather} />;
